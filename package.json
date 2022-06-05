@@ -13,5 +13,9 @@
 		"@sveltejs/kit": "next",
 		"svelte": "^3.44.0"
 	},
-	"type": "module"
+	"type": "module",
+	"dependencies": {
+		"graphql": "^16.5.0",
+		"graphql-request": "^4.3.0"
+	}
 }
