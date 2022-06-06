@@ -1,5 +1,6 @@
 <script>
   import { GraphQLClient, gql } from "graphql-request";
+  import Checkbox from "../components/Checkbox.svelte";
   import { writable } from "svelte/store";
 
   //https://realm.mongodb.com/groups/6299d27491c275417bbbac89/apps/6299d4df2f932d4c6d81e5c2/graphql/explore
@@ -23,15 +24,42 @@
   // });
 
   function handleSubmit() {
-    //	alert(`answeredith "${variables.year}"`);
-    searchMovies();  
+    //	alert(`answeredith "${searchVariables.year}"`);
+    searchMovies();
   }
 
-  let variables = {
+  let genres = [
+    "Action",
+    "Adventure",
+    "Animation",
+    "Biography",
+    "Comedy",
+    "Crime",
+    "Documentary",
+    "Drama",
+    "Family",
+    "Fantasy",
+    "History",
+    "Horror",
+    "Music",
+    "Musical",
+    "Romance",
+    "Sci-Fi",
+    "Short",
+    "Sport",
+    "Thriller",
+    "War",
+    "Western",
+  ];
+  let selectedGenres = genres.map(() => false);
+
+  let searchVariables = {
     // yearGt: 2016,
-    title: "the",
+    title: "story",
+    plot: "toy",
     year: 2010,
-    yearGt: 2010,
+    genres: null,
+    //   yearGt: 2010,
   };
 
   let searchResults = [];
@@ -46,15 +74,26 @@
           "60hswkvSMNXEE4AuNsL6xCPveFerg9ifW4dLUZLcAaLZzTUWiZTI8hVVcSNLaqXV",
       },
     });
-     const query = gql`
-        query getMovies($title: String, $year: Int) {
-          results: search(input: {title: $title, year: $year}) {
-          title,
+
+    // doel zoeken op titel, plot, jaar & genre
+    // leuk extra: vanaf jaar, voor jaar
+    const query = gql`
+      query getMovies(
+        $title: String
+        $plot: String
+        $year: Int
+        $genres: String
+      ) {
+        results: search(
+          input: { title: $title, plot: $plot, year: $year, genres: $genres }
+        ) {
+          title
           year
+          genres
         }
-       }
-     `;
-     // works
+      }
+    `;
+    // works
     //  const query = gql`
     //    query {
     //       results: search(input: {title: "the", year: 2002}) {
@@ -63,7 +102,7 @@
     //     }
     //    }
     //  `;
-    
+
     //  const query = gql`
     //    query getMovies( $year: Int, $yearGt: Int) {
     //      movies(query: { year: $year, year_gt: $yearGt }) {
@@ -84,14 +123,31 @@
     //   }
     // `;
 
-    let data = await graphQLClient.request(query, variables);
+    // if year empty set to default value (null)
+    if (searchVariables.year === null || searchVariables.year.length === 0) {
+      searchVariables.year = null;
+    }
+
+    // if year empty set to default value (null)
+    let formatedSelectedGenres = genres.filter((o, i) => selectedGenres[i]).toString();
+
+    if (formatedSelectedGenres === null || formatedSelectedGenres.length === 0) {
+      searchVariables.genres = null;
+    } else {
+      // fill in genres
+      searchVariables.genres = formatedSelectedGenres;
+    }
+
+    console.log(searchVariables);
+
+    let data = await graphQLClient.request(query, searchVariables);
 
     if (data.results == null || data.results.length === 0) {
       console.log("No movies found.");
     }
 
     searchResults = data.results;
-    console.log(data.results);
+    //console.log(data.results);
 
     //console.log(JSON.stringify(data, undefined, 2))
   }
@@ -151,22 +207,32 @@
 <h1>Form</h1>
 
 <form on:submit|preventDefault={handleSubmit}>
-  <!-- <select bind:value={selected} on:change="{() => answer = ''}">
-		{#each questions as question}
-			<option value={question}>
-				{question.text}
-			</option>
-		{/each}
-	</select> -->
+  <input bind:value={searchVariables.title} />
+  <input bind:value={searchVariables.plot} />
+  <input bind:value={searchVariables.year} />
+  <hr />
 
-  <input bind:value={variables.title} />
-  <input bind:value={variables.year} />
+  {#each genres as genre, i}
+    <Checkbox value={genre} bind:checked={selectedGenres[i]} />
+  {/each}
+  <hr />
 
   <button type="submit">Submit</button>
 </form>
 
-<!-- <input bind:value={variables.year} placeholder="enter year">
-<p>Hello {variables.year || 'stranger'}!</p> -->
+<div>
+  <p>
+    <i>
+    You searching for content with "{searchVariables.title}" with mentions of "{searchVariables.plot}"
+    in the year: "{searchVariables.year}" with genre(s): "{genres.filter(
+      (o, i) => selectedGenres[i]
+    )}".
+    </i>
+  </p>
+</div>
+
+<!-- <input bind:value={searchVariables.year} placeholder="enter year">
+<p>Hello {searchVariables.year || 'stranger'}!</p> -->
 <!-- <form on:submit|preventDefault={onSubmit}>
   <label for="year">Year</label>
   <input name="year" id="year" type="number" bind:value={$movieQuery.year} />
@@ -174,7 +240,7 @@
 </form> -->
 
 {#each searchResults as movie}
-  <p>{movie.title} {movie.year}</p>
+  <p>{movie.title} {movie.year} - <small>{movie.genres}</small></p>
 {/each}
 
 <!-- <h2>All movies</h2>
