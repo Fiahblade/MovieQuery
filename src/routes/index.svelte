@@ -1,311 +1,90 @@
-<script>
-  import { GraphQLClient, gql } from "graphql-request";
-  import Checkbox from "../components/Checkbox.svelte";
-  import { writable } from "svelte/store";
+<section>
+  <nav class="container p-6 mx-auto lg:flex lg:justify-between lg:items-center">
+      <div class="flex items-center justify-between">
+          <div>
+              <a class="text-2xl font-bold text-gray-800 dark:text-white lg:text-3xl hover:text-gray-700 dark:hover:text-gray-300" href="/">Querzy</a>
+          </div>
+      </div>
 
-  //https://realm.mongodb.com/groups/6299d27491c275417bbbac89/apps/6299d4df2f932d4c6d81e5c2/graphql/explore
+      <!-- Mobile Menu open: "block", Menu closed: "hidden" -->
+      <!-- <div class="flex flex-col mt-4 space-y-2 lg:mt-0 lg:flex-row lg:-px-8 lg:space-y-0">
+          <a class="text-gray-700 transition-colors duration-200 transform lg:mx-8 dark:text-gray-200 dark:hover:text-blue-400 hover:text-blue-500"
+              href="#">Home</a>
+          <a class="text-gray-700 transition-colors duration-200 transform lg:mx-8 dark:text-gray-200 dark:hover:text-blue-400 hover:text-blue-500"
+              href="#">Search</a>
+          <a class="text-gray-700 transition-colors duration-200 transform lg:mx-8 dark:text-gray-200 dark:hover:text-blue-400 hover:text-blue-500"
+              href="#">Library</a>
+          <a class="text-gray-700 transition-colors duration-200 transform lg:mx-8 dark:text-gray-200 dark:hover:text-blue-400 hover:text-blue-500"
+              href="#">Credits</a>
+      </div> -->
+  </nav>
 
-  // function onSubmit(e) {
-  //   const formData = new FormData(e.target);
+  <div class="container px-6 py-16 mx-auto text-center">
+      <div class="max-w-lg mx-auto">
+          <h1 class="text-3xl font-bold text-gray-800 dark:text-white md:text-4xl">Simple Movie Searcher made with GraphQL.</h1>
+          <p class="my-3 text-gray-500 dark:text-gray-300">A Web Topics Advanced 2022 Project by Robin.</p>
+          <a href="/search" class="px-6 py-2 text-sm font-medium leading-5 text-center text-white capitalize bg-blue-600 rounded-lg hover:bg-blue-500 md:mx-0 md:w-auto focus:outline-none">Start searching 🔎</a>  
+       </div>
 
-  //   // const data = {};
-  //   // for (let field of formData) {
-  //   //   const [key, value] = field;
-  //   //   data[key] = value;
-  //   // }
-  //   // console.log(data)
+      <div class="flex justify-center mt-10">
+          <div class="w-full h-64 bg-blue-600 rounded-xl md:w-4/5"></div>
+      </div>
+  </div>
 
-  //   console.log(formData)
-  // }
+</section>
 
-  // export const movieQuery = writable({
-  //   year: 2011,
-  //   year_gt: 0
-  // });
+<section class="bg-white dark:bg-gray-900">
+  <div class="container px-6 py-10 mx-auto">
+      <h1 class="text-3xl font-semibold text-center text-gray-800 lg:text-4xl dark:text-white capitalize">technology & software</h1>
+      
+      <div class="grid grid-cols-1 gap-8 mt-8 xl:mt-12 xl:gap-16 md:grid-cols-2 xl:grid-cols-3">
+          <div class="flex flex-col items-center p-6 space-y-3 text-center bg-gray-100 rounded-xl dark:bg-gray-800">
+              <h1 class="text-2xl font-semibold text-gray-700 capitalize dark:text-white">SvelteKit as a framework</h1>
 
-  function handleSubmit() {
-    //	alert(`answeredith "${searchVariables.year}"`);
-    searchVariables.pagination.skip = 0;
-    loadedMovieCount = 0;
-    searchResults = [];
-    searchMovies();
-  }
+              <p class="text-gray-500 dark:text-gray-300">
+                SvelteKit is a framework for building web applications of all sizes, with a beautiful development experience and flexible filesystem-based routing.
+              </p>
+          </div>
 
-  function handleShowMore() {
-    //	alert(`answeredith "${searchVariables.year}"`);
-    searchVariables.pagination.skip = loadedMovieCount;
-    searchMovies();
-  }
+          <div class="flex flex-col items-center p-6 space-y-3 text-center bg-gray-100 rounded-xl dark:bg-gray-800">
+              <h1 class="text-2xl font-semibold text-gray-700 capitalize dark:text-white">GraphQL as query language</h1>
 
-  let btnShowMoreVisible = false;
+              <p class="text-gray-500 dark:text-gray-300">
+                GraphQL is a query language for APIs and a runtime for fulfilling those queries with your existing data.
+              </p>
+          </div>
 
-  let genres = [
-    "Action",
-    "Adventure",
-    "Animation",
-    "Biography",
-    "Comedy",
-    "Crime",
-    "Documentary",
-    "Drama",
-    "Family",
-    "Fantasy",
-    "History",
-    "Horror",
-    "Mystery",
-    "Music",
-    "Musical",
-    "Romance",
-    "Sci-Fi",
-    "Short",
-    "Sport",
-    "Thriller",
-    "War",
-    "Western",
-  ];
-  let selectedGenres = genres.map(() => false);
+          <div class="flex flex-col items-center p-6 space-y-3 text-center bg-gray-100 rounded-xl dark:bg-gray-800">
+              <h1 class="text-2xl font-semibold text-gray-700 capitalize dark:text-white">MongoDB for our data</h1>
 
-  let searchVariables = {
-    // yearGt: 2016,
-    title: "story",
-    plot: "toy",
-    year: 2010,
-    genres: null,
-    pagination: {
-      skip: 0,
-      limit: 20,
-    },
-    //   yearGt: 2010,
-  };
+              <p class="text-gray-500 dark:text-gray-300">
+                MongoDB is a document database with the scalability and flexibility that you want with the querying and indexing that you need.
+              </p>
+          </div>
 
-  let loadedMovieCount = 0;
-  let searchResults = [];
+          <div class="flex flex-col items-center p-6 space-y-3 text-center bg-gray-100 rounded-xl dark:bg-gray-800">
+              <h1 class="text-2xl font-semibold text-gray-700 capitalize dark:text-white">Tailwind CSS for rapid styling</h1>
 
-  async function searchMovies() {
-    const endpoint =
-      "https://eu-central-1.aws.realm.mongodb.com/api/client/v2.0/app/moviequerygraphql-roato/graphql";
+              <p class="text-gray-500 dark:text-gray-300">
+                A utility-first CSS framework packed with classes like flex, pt-4, text-center and rotate-90 that can be composed to build any design, directly in your markup.
+              </p>
+          </div>
 
-    //todo put this apikey in an env variable
-    const graphQLClient = new GraphQLClient(endpoint, {
-      headers: {
-        apiKey:
-          "60hswkvSMNXEE4AuNsL6xCPveFerg9ifW4dLUZLcAaLZzTUWiZTI8hVVcSNLaqXV",
-      },
-    });
+          <div class="flex flex-col items-center p-6 space-y-3 text-center bg-gray-100 rounded-xl dark:bg-gray-800">
+              <h1 class="text-2xl font-semibold text-gray-700 capitalize dark:text-white">Hosted by Cloudflare Pages</h1>
 
-    // doel zoeken op titel, plot, jaar & genre
-    // leuk extra: vanaf jaar, voor jaar
-    const query = gql`
-      query getMovies(
-        $title: String
-        $plot: String
-        $year: Int
-        $genres: String
-        $pagination: PaginationInput
-      ) {
-        results: search(
-          input: {
-            title: $title
-            plot: $plot
-            year: $year
-            genres: $genres
-            pagination: $pagination
-          }
-        ) {
-          title
-          year
-          genres
-        }
-      }
-    `;
-    // works
-    //  const query = gql`
-    //    query {
-    //       results: search(input: {title: "the", year: 2002}) {
-    //       title,
-    //       year
-    //     }
-    //    }
-    //  `;
+              <p class="text-gray-500 dark:text-gray-300">
+                Cloudflare Pages is a JAMstack platform for frontend developers to collaborate and deploy websites.
+              </p>
+       
+          </div>
+          <div class="flex flex-col items-center p-6 space-y-3 text-center bg-gray-100 rounded-xl dark:bg-gray-800">
+              <h1 class="text-2xl font-semibold text-gray-700 capitalize dark:text-white">Visual Studio Code</h1>
 
-    //  const query = gql`
-    //    query getMovies( $year: Int, $yearGt: Int) {
-    //      movies(query: { year: $year, year_gt: $yearGt }) {
-    //        title
-    //        year
-    //      }
-    //     titleContains(input:"the") {
-    //       title
-    //     }
-    //    }
-    //  `;
-    // const query = gql`
-    //   query getMovies($title: String, $year: Int, $yearGt: Int) {
-    //     titleContains: "test" {
-    //       title
-    //       year
-    //     }
-    //   }
-    // `;
-
-    // if year empty set to default value (null)
-    if (searchVariables.year === null || searchVariables.year.length === 0) {
-      searchVariables.year = null;
-    }
-
-    // if year empty set to default value (null)
-    let formatedSelectedGenres = genres
-      .filter((o, i) => selectedGenres[i])
-      .toString();
-
-    if (formatedSelectedGenres === null || formatedSelectedGenres.length === 0) {
-      searchVariables.genres = null;
-    } else {
-      // fill in genres
-      searchVariables.genres = formatedSelectedGenres;
-    }
-
-    console.log(searchVariables);
-
-    let data = await graphQLClient.request(query, searchVariables);
-
-    if (data.results == null || data.results.length === 0) {
-      console.log("No movies found.");
-    }
-
-    let foundMovies = data.results.length;
-
-    if (foundMovies > 0) {
-      loadedMovieCount += foundMovies;
-      searchResults = searchResults.concat(data.results);
-    }
-
-    if (foundMovies < searchVariables.pagination.limit) {
-      btnShowMoreVisible = false;
-    } else {
-      btnShowMoreVisible = foundMovies > 0;
-    }
-
-
-    //console.log(data.results);
-    console.log(loadedMovieCount);
-    console.log(btnShowMoreVisible);
-
-    //console.log(JSON.stringify(data, undefined, 2))
-  }
-
-  async function getAllMovies() {
-    const endpoint =
-      "https://eu-central-1.aws.realm.mongodb.com/api/client/v2.0/app/moviequerygraphql-roato/graphql";
-
-    const graphQLClient = new GraphQLClient(endpoint, {
-      headers: {
-        apiKey:
-          "60hswkvSMNXEE4AuNsL6xCPveFerg9ifW4dLUZLcAaLZzTUWiZTI8hVVcSNLaqXV",
-      },
-    });
-
-    const query = gql`
-      {
-        movies {
-          _id
-          cast
-          countries
-          directors
-          fullplot
-          genres
-          languages
-          lastupdated
-          metacritic
-          num_mflix_comments
-          plot
-          poster
-          rated
-          released
-          runtime
-          title
-          type
-          writers
-          year
-        }
-      }
-    `;
-
-    let data = await graphQLClient.request(query);
-
-    return data.movies;
-
-    //console.log(JSON.stringify(data, undefined, 2))
-  }
-
-  //let movies = searchMovies();
-
-  //main().catch((error) => console.error(error))
-</script>
-
-<h1>MovieQuery</h1>
-<h2>Search</h2>
-
-<form on:submit|preventDefault={handleSubmit}>
-  <input bind:value={searchVariables.title} />
-  <input bind:value={searchVariables.plot} />
-  <input bind:value={searchVariables.year} />
-  <hr />
-
-  {#each genres as genre, i}
-    <Checkbox value={genre} bind:checked={selectedGenres[i]} />
-  {/each}
-  <hr />
-
-  <button type="submit">Submit</button>
-</form>
-
-<div>
-  <p>
-    <i>
-      You searching for content with "{searchVariables.title}" with mentions of
-      "{searchVariables.plot}" in the year: "{searchVariables.year}" with
-      genre(s): "{genres.filter((o, i) => selectedGenres[i])}".
-    </i>
-  </p>
-</div>
-<h2>Results</h2>
-
-<!-- <input bind:value={searchVariables.year} placeholder="enter year">
-<p>Hello {searchVariables.year || 'stranger'}!</p> -->
-<!-- <form on:submit|preventDefault={onSubmit}>
-  <label for="year">Year</label>
-  <input name="year" id="year" type="number" bind:value={$movieQuery.year} />
-  <button type="submit">Submit</button>
-</form> -->
-
-{#each searchResults as movie}
-  <p>{movie.title} {movie.year} - <small>{movie.genres}</small></p>
-{/each}
-
-{#if btnShowMoreVisible}
-  <form on:submit|preventDefault={handleShowMore}>
-    <button type="submit">Show More</button>
-  </form>
-{/if}
-
-<!-- <h2>All movies</h2>
-{#await getAllMovies()}
-  <p>.. loading</p>
-{:then movies}
-  {#each movies as movie, i}
-    <p>{movie.title}</p>
-  {/each}
-{:catch e}
-  {e}
-{/await} -->
-<style>
-  .hidden {
-    opacity: 0;
-    visibility: hidden;
-  }
-  .btnShowMore.expanded {
-    opacity: 1;
-    visibility: visible;
-  }
-</style>
+              <p class="text-gray-500 dark:text-gray-300">
+                My precious.
+              </p>
+          </div>
+      </div>
+  </div>
+</section>
