@@ -25,8 +25,19 @@
 
   function handleSubmit() {
     //	alert(`answeredith "${searchVariables.year}"`);
+    searchVariables.pagination.skip = 0;
+    loadedMovieCount = 0;
+    searchResults = [];
     searchMovies();
   }
+
+  function handleShowMore() {
+    //	alert(`answeredith "${searchVariables.year}"`);
+    searchVariables.pagination.skip = loadedMovieCount;
+    searchMovies();
+  }
+
+  let btnShowMoreVisible = false;
 
   let genres = [
     "Action",
@@ -41,6 +52,7 @@
     "Fantasy",
     "History",
     "Horror",
+    "Mystery",
     "Music",
     "Musical",
     "Romance",
@@ -59,15 +71,21 @@
     plot: "toy",
     year: 2010,
     genres: null,
+    pagination: {
+      skip: 0,
+      limit: 20,
+    },
     //   yearGt: 2010,
   };
 
+  let loadedMovieCount = 0;
   let searchResults = [];
 
   async function searchMovies() {
     const endpoint =
       "https://eu-central-1.aws.realm.mongodb.com/api/client/v2.0/app/moviequerygraphql-roato/graphql";
 
+    //todo put this apikey in an env variable
     const graphQLClient = new GraphQLClient(endpoint, {
       headers: {
         apiKey:
@@ -83,9 +101,16 @@
         $plot: String
         $year: Int
         $genres: String
+        $pagination: PaginationInput
       ) {
         results: search(
-          input: { title: $title, plot: $plot, year: $year, genres: $genres }
+          input: {
+            title: $title
+            plot: $plot
+            year: $year
+            genres: $genres
+            pagination: $pagination
+          }
         ) {
           title
           year
@@ -129,7 +154,9 @@
     }
 
     // if year empty set to default value (null)
-    let formatedSelectedGenres = genres.filter((o, i) => selectedGenres[i]).toString();
+    let formatedSelectedGenres = genres
+      .filter((o, i) => selectedGenres[i])
+      .toString();
 
     if (formatedSelectedGenres === null || formatedSelectedGenres.length === 0) {
       searchVariables.genres = null;
@@ -146,8 +173,23 @@
       console.log("No movies found.");
     }
 
-    searchResults = data.results;
+    let foundMovies = data.results.length;
+
+    if (foundMovies > 0) {
+      loadedMovieCount += foundMovies;
+      searchResults = searchResults.concat(data.results);
+    }
+
+    if (foundMovies < searchVariables.pagination.limit) {
+      btnShowMoreVisible = false;
+    } else {
+      btnShowMoreVisible = foundMovies > 0;
+    }
+
+
     //console.log(data.results);
+    console.log(loadedMovieCount);
+    console.log(btnShowMoreVisible);
 
     //console.log(JSON.stringify(data, undefined, 2))
   }
@@ -202,9 +244,7 @@
 </script>
 
 <h1>MovieQuery</h1>
-<h2>Search movies</h2>
-
-<h1>Form</h1>
+<h2>Search</h2>
 
 <form on:submit|preventDefault={handleSubmit}>
   <input bind:value={searchVariables.title} />
@@ -223,13 +263,13 @@
 <div>
   <p>
     <i>
-    You searching for content with "{searchVariables.title}" with mentions of "{searchVariables.plot}"
-    in the year: "{searchVariables.year}" with genre(s): "{genres.filter(
-      (o, i) => selectedGenres[i]
-    )}".
+      You searching for content with "{searchVariables.title}" with mentions of
+      "{searchVariables.plot}" in the year: "{searchVariables.year}" with
+      genre(s): "{genres.filter((o, i) => selectedGenres[i])}".
     </i>
   </p>
 </div>
+<h2>Results</h2>
 
 <!-- <input bind:value={searchVariables.year} placeholder="enter year">
 <p>Hello {searchVariables.year || 'stranger'}!</p> -->
@@ -243,6 +283,12 @@
   <p>{movie.title} {movie.year} - <small>{movie.genres}</small></p>
 {/each}
 
+{#if btnShowMoreVisible}
+  <form on:submit|preventDefault={handleShowMore}>
+    <button type="submit">Show More</button>
+  </form>
+{/if}
+
 <!-- <h2>All movies</h2>
 {#await getAllMovies()}
   <p>.. loading</p>
@@ -253,3 +299,13 @@
 {:catch e}
   {e}
 {/await} -->
+<style>
+  .hidden {
+    opacity: 0;
+    visibility: hidden;
+  }
+  .btnShowMore.expanded {
+    opacity: 1;
+    visibility: visible;
+  }
+</style>
