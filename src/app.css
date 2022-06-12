@@ -2,9 +2,8 @@
 @tailwind components;
 @tailwind utilities;
 
-/* voorbeeld van een 'shortcut' */
-/* @layer components {
-    .form-input {
-      @apply py-3 pl-10 pr-4 text-gray-700 bg-white border rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring;
-    }
-  } */
+@layer components {
+  .form-input {
+    @apply py-1 pl-4 pr-4 my-1 text-gray-700 bg-white border rounded-md focus:border-blue-500 focus:outline-none focus:ring;
+  }
+}

@@ -2,6 +2,7 @@
   import { createEventDispatcher } from "svelte";
   import Checkbox from "../components/Checkbox.svelte";
   import Textbox from "./Textbox.svelte";
+  import NumericTextbox from "./NumericTextbox.svelte";
   import Button from "../components/Button.svelte";
 
   const dispatch = createEventDispatcher();
@@ -27,6 +28,7 @@
   }
 
   function reset() {
+    selectedGenres = genres.map(() => false);
     filterOptions = {
       title: "",
       plot: "",
@@ -36,10 +38,10 @@
   }
 
   let filterOptions = {
-    title: "story",
-    plot: "toy",
-    year: 2010,
-    genres: null,
+      title: "",
+      plot: "",
+      year: null,
+      genres: null,
   };
 
   const genres = [
@@ -77,7 +79,7 @@
 
   {#if expanded}
     <Textbox bind:value={filterOptions.plot} title="plot" placeholder="What's the movie about?" />
-    <Textbox bind:value={filterOptions.year} title="release year" placeholder="What year is it from?" />
+    <NumericTextbox bind:value={filterOptions.year} title="release year" placeholder="What year is it from?"/>
 
     <label class="text-gray-700 dark:text-gray-200 capitalize" for="">genres</label>
     <div class="grid grid-cols-3 gap-1">
