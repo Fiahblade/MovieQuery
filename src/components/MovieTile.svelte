@@ -8,24 +8,22 @@
 
 <!-- <p>{title} {year} - <small>{genres}</small></p> -->
 
-
-
- <section class="bg-gray-100 dark:bg-gray-900 lg:py-12 lg:flex ">
+<section class="bg-gray-100 dark:bg-gray-900 lg:py-12 lg:flex ">
     <div class="bg-white dark:bg-gray-800 lg:mx-8 lg:flex lg:max-w-5xl lg:shadow-lg lg:rounded-lg">
         <div class="lg:w-1/2">
-            <div class="h-64 bg-cover bg-center lg:rounded-lg lg:h-full" style="background-image:url('{poster}')"></div>
+            <div class="h-64 bg-cover bg-center lg:rounded-lg lg:h-full" style="background-image:url('{poster}')" />
         </div>
 
         <div class="max-w-xl px-6 py-12 lg:max-w-xl lg:w-4/5">
-            <h2 class="text-2xl font-bold text-gray-800 dark:text-white md:text-3xl">{title}  <span class="text-blue-600 dark:text-blue-400">{year}</span></h2>
+            <h2 class="text-2xl font-bold text-gray-800 dark:text-white md:text-3xl">{title} <span class="text-blue-600 dark:text-blue-400">{year}</span></h2>
             <p class="mt-4 text-gray-600 dark:text-gray-400">{plot}</p>
-            
+
             <div class="mt-8">
                 <a href="#" class="px-5 py-2 font-semibold text-gray-100 transition-colors duration-200 transform bg-gray-900 rounded-md hover:bg-gray-700">Start Now</a>
             </div>
         </div>
     </div>
-</section>  
+</section>
 
 <!-- 
 <div class="max-w-sm mx-auto overflow-hidden bg-white rounded-lg shadow-lg dark:bg-gray-800">
