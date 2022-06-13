@@ -8,7 +8,7 @@
     export let poster;
 
     function showMovieDetails() {
-        openModal(MoreDetailsModal, { id: _id });
+        openModal(MoreDetailsModal, { id: _id, title, year });
     }
 
     function handleCoverError(e) {

@@ -3,7 +3,10 @@
   import { closeModal } from "svelte-modals";
 
   export let isOpen;
+  
   export let id;
+  export let title;
+  export let year;
 
   let movie = {
     title: "",
@@ -15,20 +18,15 @@
   async function LoadMovie() {
     const endpoint = "https://eu-central-1.aws.realm.mongodb.com/api/client/v2.0/app/moviequerygraphql-roato/graphql";
 
-    //todo put this apikey in an env variable
     const graphQLClient = new GraphQLClient(endpoint, {
       headers: {
-        apiKey: "60hswkvSMNXEE4AuNsL6xCPveFerg9ifW4dLUZLcAaLZzTUWiZTI8hVVcSNLaqXV",
+        apiKey: import.meta.env.VITE_API_KEY,
       },
     });
 
-    // doel zoeken op titel, plot, jaar & genre
-    // leuk extra: vanaf jaar, voor jaar
     const query = gql`
       query getMovie($id: ObjectId) {
         movie(query: { _id: $id }) {
-          title
-          year
           fullplot
           cast
         }
@@ -46,11 +44,10 @@
 
 {#if isOpen}
   <div role="dialog" class="modal">
-    <!-- <div id="defaultModal" tabindex="-1" aria-hidden="true" class=" overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 w-full md:inset-0 h-modal md:h-full justify-center items-center"> -->
     <div class="relative p-4 w-full max-w-2xl h-full md:h-auto contents">
       <div class="relative bg-gray-600 shadow rounded-lg text-white">
         <div class="flex justify-between items-start p-4 rounded-t border-b">
-          <h3 class="text-xl font-semibold ">{movie.title} - {movie.year}</h3>
+          <h3 class="text-xl font-semibold ">{title} - {year}</h3>
           <button on:click={closeModal} type="button" class="text-white bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center">
             <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
               <path

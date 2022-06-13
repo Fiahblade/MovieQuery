@@ -38,10 +38,9 @@
   async function searchMovies() {
     const endpoint = "https://eu-central-1.aws.realm.mongodb.com/api/client/v2.0/app/moviequerygraphql-roato/graphql";
 
-    //todo put this apikey in an env variable
     const graphQLClient = new GraphQLClient(endpoint, {
       headers: {
-        apiKey: "60hswkvSMNXEE4AuNsL6xCPveFerg9ifW4dLUZLcAaLZzTUWiZTI8hVVcSNLaqXV",
+        apiKey: import.meta.env.VITE_API_KEY,
       },
     });
 

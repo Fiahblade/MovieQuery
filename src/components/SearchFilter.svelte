@@ -3,7 +3,6 @@
   import Checkbox from "../components/Checkbox.svelte";
   import Textbox from "./Textbox.svelte";
   import NumericTextbox from "./NumericTextbox.svelte";
-  import Button from "../components/Button.svelte";
 
   const dispatch = createEventDispatcher();
   function search() {
@@ -38,10 +37,10 @@
   }
 
   let filterOptions = {
-      title: "",
-      plot: "",
-      year: null,
-      genres: null,
+    title: "",
+    plot: "",
+    year: null,
+    genres: null,
   };
 
   const genres = [
@@ -79,7 +78,7 @@
 
   {#if expanded}
     <Textbox bind:value={filterOptions.plot} title="plot" placeholder="What's the movie about?" />
-    <NumericTextbox bind:value={filterOptions.year} title="release year" placeholder="What year is it from?"/>
+    <NumericTextbox bind:value={filterOptions.year} title="release year" placeholder="What year is it from?" />
 
     <label class="text-gray-700 dark:text-gray-200 capitalize" for="">genres</label>
     <div class="grid grid-cols-3 gap-1">
@@ -95,13 +94,3 @@
 
   <button type="submit" class="w-full mt-2 px-5 py-2 font-semibold text-white capitalize bg-blue-600 rounded-lg hover:bg-blue-500 ">search 🔎</button>
 </form>
-
-<!-- <div>
-  <p> 
-    <i>
-      You searching for content with "{filterOptions.title}" with mentions of
-      "{filterOptions.plot}" in the year: "{filterOptions.year}" with
-      genre(s): "{genres.filter((o, i) => selectedGenres[i])}".
-    </i>
-  </p>
-</div> -->

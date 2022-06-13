@@ -1,0 +1,914 @@
+input PaginationInput {
+  skip: Int
+  limit: Int
+}
+
+input MovieUpdateInput {
+  runtime_inc: Int
+  rated_unset: Boolean
+  fullplot: String
+  lastupdated_unset: Boolean
+  tomatoes_unset: Boolean
+  title: String
+  metacritic_unset: Boolean
+  _id: ObjectId
+  plot: String
+  released: DateTime
+  fullplot_unset: Boolean
+  year_unset: Boolean
+  languages_unset: Boolean
+  num_mflix_comments_inc: Int
+  imdb: MovieImdbUpdateInput
+  directors: [String]
+  cast: [String]
+  num_mflix_comments: Int
+  plot_unset: Boolean
+  type: String
+  num_mflix_comments_unset: Boolean
+  year: Int
+  rated: String
+  genres_unset: Boolean
+  imdb_unset: Boolean
+  _id_unset: Boolean
+  year_inc: Int
+  poster: String
+  writers_unset: Boolean
+  lastupdated: String
+  tomatoes: MovieTomatoUpdateInput
+  countries_unset: Boolean
+  languages: [String]
+  metacritic_inc: Int
+  writers: [String]
+  genres: [String]
+  poster_unset: Boolean
+  runtime: Int
+  runtime_unset: Boolean
+  metacritic: Int
+  title_unset: Boolean
+  countries: [String]
+  directors_unset: Boolean
+  awards: MovieAwardUpdateInput
+  released_unset: Boolean
+  cast_unset: Boolean
+  awards_unset: Boolean
+  type_unset: Boolean
+}
+
+type MovieTomato {
+  boxOffice: String
+  consensus: String
+  critic: MovieTomatoCritic
+  dvd: DateTime
+  fresh: Int
+  lastUpdated: DateTime
+  production: String
+  rotten: Int
+  viewer: MovieTomatoViewer
+  website: String
+}
+
+type Restaurant {
+  _id: ObjectId
+  address: RestaurantAddress
+  borough: String
+  cuisine: String
+  grades: [RestaurantGrade]
+  name: String
+  restaurant_id: String
+}
+
+input SearchInput {
+  title: String
+  plot: String
+  year: Int
+  genres: String
+  pagination: PaginationInput
+}
+
+input MovieImdbUpdateInput {
+  id: Int
+  rating_inc: Float
+  votes_unset: Boolean
+  rating: Float
+  id_inc: Int
+  id_unset: Boolean
+  rating_unset: Boolean
+  votes: Int
+  votes_inc: Int
+}
+
+input RestaurantQueryInput {
+  cuisine_gte: String
+  _id_exists: Boolean
+  _id_nin: [ObjectId]
+  restaurant_id_lt: String
+  address_exists: Boolean
+  cuisine_ne: String
+  name_lt: String
+  restaurant_id: String
+  name_gte: String
+  name_exists: Boolean
+  borough_in: [String]
+  _id_gte: ObjectId
+  borough_gte: String
+  cuisine_lt: String
+  restaurant_id_gt: String
+  name: String
+  cuisine_exists: Boolean
+  cuisine_nin: [String]
+  grades_nin: [RestaurantGradeQueryInput]
+  restaurant_id_exists: Boolean
+  name_nin: [String]
+  restaurant_id_nin: [String]
+  borough_ne: String
+  borough_lt: String
+  grades_exists: Boolean
+  _id_gt: ObjectId
+  OR: [RestaurantQueryInput!]
+  borough_exists: Boolean
+  name_gt: String
+  restaurant_id_lte: String
+  grades_in: [RestaurantGradeQueryInput]
+  borough_gt: String
+  cuisine: String
+  name_lte: String
+  restaurant_id_gte: String
+  _id_in: [ObjectId]
+  borough_lte: String
+  cuisine_in: [String]
+  _id_lt: ObjectId
+  borough_nin: [String]
+  name_ne: String
+  restaurant_id_ne: String
+  _id_ne: ObjectId
+  cuisine_gt: String
+  grades: [RestaurantGradeQueryInput]
+  AND: [RestaurantQueryInput!]
+  restaurant_id_in: [String]
+  cuisine_lte: String
+  borough: String
+  address: RestaurantAddressQueryInput
+  _id: ObjectId
+  _id_lte: ObjectId
+  name_in: [String]
+}
+
+input MovieAwardQueryInput {
+  nominations_in: [Int]
+  text_lt: String
+  text_nin: [String]
+  text_gte: String
+  nominations: Int
+  nominations_gte: Int
+  text_lte: String
+  nominations_ne: Int
+  OR: [MovieAwardQueryInput!]
+  wins_nin: [Int]
+  nominations_lte: Int
+  AND: [MovieAwardQueryInput!]
+  text_ne: String
+  wins: Int
+  wins_in: [Int]
+  wins_lt: Int
+  wins_lte: Int
+  text_exists: Boolean
+  nominations_gt: Int
+  wins_gt: Int
+  wins_ne: Int
+  nominations_lt: Int
+  nominations_nin: [Int]
+  text_in: [String]
+  text_gt: String
+  text: String
+  wins_gte: Int
+  wins_exists: Boolean
+  nominations_exists: Boolean
+}
+
+input RestaurantGradeInsertInput {
+  date: DateTime
+  grade: String
+  score: Int
+}
+
+input RestaurantGradeQueryInput {
+  score_gt: Int
+  date_in: [DateTime]
+  grade_ne: String
+  score_nin: [Int]
+  score_exists: Boolean
+  date_ne: DateTime
+  OR: [RestaurantGradeQueryInput!]
+  score_in: [Int]
+  grade_nin: [String]
+  date_lte: DateTime
+  date_gte: DateTime
+  score_ne: Int
+  grade_lte: String
+  date_exists: Boolean
+  score_gte: Int
+  grade: String
+  date_lt: DateTime
+  grade_gte: String
+  grade_lt: String
+  date_nin: [DateTime]
+  AND: [RestaurantGradeQueryInput!]
+  grade_in: [String]
+  date_gt: DateTime
+  grade_gt: String
+  score_lt: Int
+  score_lte: Int
+  date: DateTime
+  score: Int
+  grade_exists: Boolean
+}
+
+scalar DateTime
+
+type MovieAward {
+  nominations: Int
+  text: String
+  wins: Int
+}
+
+input MovieTomatoViewerInsertInput {
+  meter: Int
+  numReviews: Int
+  rating: Float
+}
+
+type RestaurantAddress {
+  building: String
+  coord: [Float]
+  street: String
+  zipcode: String
+}
+
+input MovieImdbQueryInput {
+  votes_exists: Boolean
+  votes_in: [Int]
+  rating_lte: Float
+  rating: Float
+  id: Int
+  votes: Int
+  AND: [MovieImdbQueryInput!]
+  rating_ne: Float
+  votes_nin: [Int]
+  rating_in: [Float]
+  id_lte: Int
+  votes_lte: Int
+  id_exists: Boolean
+  rating_exists: Boolean
+  id_nin: [Int]
+  rating_nin: [Float]
+  votes_ne: Int
+  rating_gt: Float
+  votes_lt: Int
+  id_lt: Int
+  OR: [MovieImdbQueryInput!]
+  id_gte: Int
+  id_ne: Int
+  votes_gt: Int
+  rating_lt: Float
+  rating_gte: Float
+  id_in: [Int]
+  id_gt: Int
+  votes_gte: Int
+}
+
+type MovieTomatoViewer {
+  meter: Int
+  numReviews: Int
+  rating: Float
+}
+
+input RestaurantGradeUpdateInput {
+  grade_unset: Boolean
+  score: Int
+  score_inc: Int
+  score_unset: Boolean
+  date: DateTime
+  date_unset: Boolean
+  grade: String
+}
+
+scalar ObjectId
+
+input MovieTomatoCriticQueryInput {
+  numReviews_lt: Int
+  rating_in: [Float]
+  rating_gt: Float
+  numReviews_gte: Int
+  meter_nin: [Int]
+  numReviews: Int
+  numReviews_ne: Int
+  meter_gte: Int
+  rating_exists: Boolean
+  rating_nin: [Float]
+  rating_gte: Float
+  meter: Int
+  numReviews_exists: Boolean
+  meter_exists: Boolean
+  rating_lt: Float
+  rating: Float
+  meter_gt: Int
+  meter_lt: Int
+  rating_ne: Float
+  rating_lte: Float
+  OR: [MovieTomatoCriticQueryInput!]
+  meter_in: [Int]
+  numReviews_nin: [Int]
+  meter_lte: Int
+  numReviews_in: [Int]
+  meter_ne: Int
+  numReviews_gt: Int
+  numReviews_lte: Int
+  AND: [MovieTomatoCriticQueryInput!]
+}
+
+input RestaurantInsertInput {
+  borough: String
+  cuisine: String
+  grades: [RestaurantGradeInsertInput]
+  name: String
+  restaurant_id: String
+  _id: ObjectId
+  address: RestaurantAddressInsertInput
+}
+
+type RestaurantGrade {
+  date: DateTime
+  grade: String
+  score: Int
+}
+
+input MovieTomatoInsertInput {
+  viewer: MovieTomatoViewerInsertInput
+  dvd: DateTime
+  fresh: Int
+  boxOffice: String
+  critic: MovieTomatoCriticInsertInput
+  website: String
+  production: String
+  rotten: Int
+  lastUpdated: DateTime
+  consensus: String
+}
+
+type DeleteManyPayload {
+  deletedCount: Int!
+}
+
+input MovieTomatoCriticUpdateInput {
+  rating: Float
+  rating_unset: Boolean
+  meter_unset: Boolean
+  rating_inc: Float
+  meter: Int
+  meter_inc: Int
+  numReviews: Int
+  numReviews_inc: Int
+  numReviews_unset: Boolean
+}
+
+enum MovieSortByInput {
+  FULLPLOT_ASC
+  LASTUPDATED_ASC
+  METACRITIC_ASC
+  PLOT_ASC
+  PLOT_DESC
+  POSTER_ASC
+  _ID_DESC
+  METACRITIC_DESC
+  NUM_MFLIX_COMMENTS_DESC
+  POSTER_DESC
+  RATED_DESC
+  RELEASED_DESC
+  RUNTIME_ASC
+  RUNTIME_DESC
+  FULLPLOT_DESC
+  TYPE_ASC
+  TITLE_ASC
+  RATED_ASC
+  TITLE_DESC
+  TYPE_DESC
+  LASTUPDATED_DESC
+  NUM_MFLIX_COMMENTS_ASC
+  RELEASED_ASC
+  YEAR_ASC
+  YEAR_DESC
+  _ID_ASC
+}
+
+type MovieTomatoCritic {
+  meter: Int
+  numReviews: Int
+  rating: Float
+}
+
+input RestaurantUpdateInput {
+  _id_unset: Boolean
+  borough_unset: Boolean
+  grades: [RestaurantGradeUpdateInput]
+  restaurant_id: String
+  _id: ObjectId
+  address_unset: Boolean
+  cuisine: String
+  address: RestaurantAddressUpdateInput
+  cuisine_unset: Boolean
+  name_unset: Boolean
+  name: String
+  restaurant_id_unset: Boolean
+  borough: String
+  grades_unset: Boolean
+}
+
+input RestaurantAddressUpdateInput {
+  street: String
+  street_unset: Boolean
+  zipcode: String
+  zipcode_unset: Boolean
+  building: String
+  building_unset: Boolean
+  coord: [Float]
+  coord_unset: Boolean
+}
+
+type Query {
+  movie(query: MovieQueryInput): Movie
+  movies(query: MovieQueryInput, limit: Int = 100, sortBy: MovieSortByInput): [Movie]!
+  restaurant(query: RestaurantQueryInput): Restaurant
+  restaurants(query: RestaurantQueryInput, limit: Int = 100, sortBy: RestaurantSortByInput): [Restaurant]!
+  search(input: SearchInput): [Movie]
+}
+
+type Mutation {
+  deleteManyMovies(query: MovieQueryInput): DeleteManyPayload
+  deleteManyRestaurants(query: RestaurantQueryInput): DeleteManyPayload
+  deleteOneMovie(query: MovieQueryInput!): Movie
+  deleteOneRestaurant(query: RestaurantQueryInput!): Restaurant
+  insertManyMovies(data: [MovieInsertInput!]!): InsertManyPayload
+  insertManyRestaurants(data: [RestaurantInsertInput!]!): InsertManyPayload
+  insertOneMovie(data: MovieInsertInput!): Movie
+  insertOneRestaurant(data: RestaurantInsertInput!): Restaurant
+  replaceOneMovie(query: MovieQueryInput, data: MovieInsertInput!): Movie
+  replaceOneRestaurant(query: RestaurantQueryInput, data: RestaurantInsertInput!): Restaurant
+  updateManyMovies(query: MovieQueryInput, set: MovieUpdateInput!): UpdateManyPayload
+  updateManyRestaurants(query: RestaurantQueryInput, set: RestaurantUpdateInput!): UpdateManyPayload
+  updateOneMovie(set: MovieUpdateInput!, query: MovieQueryInput): Movie
+  updateOneRestaurant(query: RestaurantQueryInput, set: RestaurantUpdateInput!): Restaurant
+  upsertOneMovie(query: MovieQueryInput, data: MovieInsertInput!): Movie
+  upsertOneRestaurant(query: RestaurantQueryInput, data: RestaurantInsertInput!): Restaurant
+}
+
+input RestaurantAddressInsertInput {
+  zipcode: String
+  building: String
+  coord: [Float]
+  street: String
+}
+
+type UpdateManyPayload {
+  matchedCount: Int!
+  modifiedCount: Int!
+}
+
+input MovieTomatoViewerQueryInput {
+  meter_lte: Int
+  meter: Int
+  rating_lt: Float
+  numReviews_in: [Int]
+  rating_in: [Float]
+  meter_nin: [Int]
+  numReviews_ne: Int
+  rating: Float
+  numReviews_lte: Int
+  rating_lte: Float
+  numReviews_gte: Int
+  meter_exists: Boolean
+  numReviews_lt: Int
+  rating_exists: Boolean
+  rating_gte: Float
+  AND: [MovieTomatoViewerQueryInput!]
+  numReviews_exists: Boolean
+  rating_nin: [Float]
+  rating_ne: Float
+  meter_gte: Int
+  meter_in: [Int]
+  meter_ne: Int
+  OR: [MovieTomatoViewerQueryInput!]
+  meter_gt: Int
+  rating_gt: Float
+  meter_lt: Int
+  numReviews_gt: Int
+  numReviews: Int
+  numReviews_nin: [Int]
+}
+
+input MovieAwardInsertInput {
+  wins: Int
+  nominations: Int
+  text: String
+}
+
+input RestaurantAddressQueryInput {
+  building_exists: Boolean
+  zipcode_gte: String
+  street_exists: Boolean
+  OR: [RestaurantAddressQueryInput!]
+  zipcode_in: [String]
+  street_lt: String
+  zipcode_lt: String
+  building_lte: String
+  building_nin: [String]
+  street_ne: String
+  street_gte: String
+  building_lt: String
+  building_ne: String
+  coord: [Float]
+  coord_nin: [Float]
+  AND: [RestaurantAddressQueryInput!]
+  building_gt: String
+  zipcode_nin: [String]
+  zipcode_lte: String
+  street_nin: [String]
+  zipcode: String
+  zipcode_gt: String
+  zipcode_ne: String
+  building_in: [String]
+  street_gt: String
+  street_lte: String
+  zipcode_exists: Boolean
+  coord_exists: Boolean
+  street_in: [String]
+  building_gte: String
+  street: String
+  coord_in: [Float]
+  building: String
+}
+
+type Movie {
+  _id: ObjectId
+  awards: MovieAward
+  cast: [String]
+  countries: [String]
+  directors: [String]
+  fullplot: String
+  genres: [String]
+  imdb: MovieImdb
+  languages: [String]
+  lastupdated: String
+  metacritic: Int
+  num_mflix_comments: Int
+  plot: String
+  poster: String
+  rated: String
+  released: DateTime
+  runtime: Int
+  title: String
+  tomatoes: MovieTomato
+  type: String
+  writers: [String]
+  year: Int
+}
+
+input MovieInsertInput {
+  released: DateTime
+  cast: [String]
+  fullplot: String
+  metacritic: Int
+  num_mflix_comments: Int
+  poster: String
+  directors: [String]
+  rated: String
+  tomatoes: MovieTomatoInsertInput
+  type: String
+  awards: MovieAwardInsertInput
+  countries: [String]
+  _id: ObjectId
+  runtime: Int
+  year: Int
+  genres: [String]
+  plot: String
+  title: String
+  writers: [String]
+  imdb: MovieImdbInsertInput
+  languages: [String]
+  lastupdated: String
+}
+
+input MovieImdbInsertInput {
+  votes: Int
+  id: Int
+  rating: Float
+}
+
+input MovieTomatoQueryInput {
+  viewer_exists: Boolean
+  consensus_ne: String
+  lastUpdated_in: [DateTime]
+  production_exists: Boolean
+  production_gte: String
+  lastUpdated_gt: DateTime
+  fresh_in: [Int]
+  production_lte: String
+  website_in: [String]
+  boxOffice_lte: String
+  rotten_lte: Int
+  rotten_lt: Int
+  boxOffice_gte: String
+  boxOffice_lt: String
+  production_in: [String]
+  rotten_gt: Int
+  dvd_gt: DateTime
+  consensus_lte: String
+  dvd_in: [DateTime]
+  fresh_lt: Int
+  consensus_nin: [String]
+  lastUpdated_nin: [DateTime]
+  OR: [MovieTomatoQueryInput!]
+  rotten_gte: Int
+  boxOffice_nin: [String]
+  consensus_gt: String
+  website_gte: String
+  dvd: DateTime
+  rotten_in: [Int]
+  critic_exists: Boolean
+  fresh_exists: Boolean
+  consensus_gte: String
+  fresh_ne: Int
+  lastUpdated_gte: DateTime
+  boxOffice_gt: String
+  lastUpdated_ne: DateTime
+  consensus_lt: String
+  consensus_in: [String]
+  boxOffice_in: [String]
+  dvd_lte: DateTime
+  website_exists: Boolean
+  dvd_exists: Boolean
+  production_nin: [String]
+  lastUpdated: DateTime
+  production_lt: String
+  website_gt: String
+  production: String
+  critic: MovieTomatoCriticQueryInput
+  production_ne: String
+  fresh_gt: Int
+  fresh_nin: [Int]
+  dvd_ne: DateTime
+  dvd_lt: DateTime
+  lastUpdated_lte: DateTime
+  lastUpdated_exists: Boolean
+  dvd_nin: [DateTime]
+  website_nin: [String]
+  production_gt: String
+  rotten_nin: [Int]
+  boxOffice: String
+  website: String
+  viewer: MovieTomatoViewerQueryInput
+  rotten_ne: Int
+  dvd_gte: DateTime
+  website_lt: String
+  AND: [MovieTomatoQueryInput!]
+  boxOffice_exists: Boolean
+  consensus_exists: Boolean
+  fresh_gte: Int
+  consensus: String
+  website_ne: String
+  boxOffice_ne: String
+  lastUpdated_lt: DateTime
+  fresh_lte: Int
+  website_lte: String
+  rotten_exists: Boolean
+  fresh: Int
+  rotten: Int
+}
+
+enum RestaurantSortByInput {
+  BOROUGH_DESC
+  NAME_DESC
+  RESTAURANT_ID_ASC
+  _ID_ASC
+  BOROUGH_ASC
+  CUISINE_DESC
+  NAME_ASC
+  RESTAURANT_ID_DESC
+  _ID_DESC
+  CUISINE_ASC
+}
+
+input MovieQueryInput {
+  runtime_ne: Int
+  genres: [String]
+  cast_exists: Boolean
+  writers_in: [String]
+  cast_in: [String]
+  metacritic_lte: Int
+  type_gte: String
+  directors_exists: Boolean
+  year_in: [Int]
+  num_mflix_comments_nin: [Int]
+  languages: [String]
+  released: DateTime
+  writers_nin: [String]
+  title_ne: String
+  type_exists: Boolean
+  _id_gte: ObjectId
+  released_nin: [DateTime]
+  rated_lte: String
+  cast: [String]
+  runtime_nin: [Int]
+  type_gt: String
+  languages_in: [String]
+  released_lt: DateTime
+  rated_gte: String
+  title_nin: [String]
+  fullplot: String
+  num_mflix_comments_in: [Int]
+  title_gt: String
+  metacritic_in: [Int]
+  type_in: [String]
+  year: Int
+  fullplot_gte: String
+  lastupdated: String
+  runtime_exists: Boolean
+  cast_nin: [String]
+  runtime_gte: Int
+  poster_gt: String
+  lastupdated_gte: String
+  released_lte: DateTime
+  year_ne: Int
+  genres_in: [String]
+  num_mflix_comments_gte: Int
+  released_ne: DateTime
+  rated_lt: String
+  metacritic_exists: Boolean
+  _id_nin: [ObjectId]
+  rated: String
+  title_exists: Boolean
+  runtime_lt: Int
+  title: String
+  countries_in: [String]
+  released_gt: DateTime
+  imdb: MovieImdbQueryInput
+  _id_lte: ObjectId
+  year_lt: Int
+  metacritic_nin: [Int]
+  poster_gte: String
+  poster: String
+  fullplot_in: [String]
+  lastupdated_nin: [String]
+  awards_exists: Boolean
+  writers: [String]
+  directors_nin: [String]
+  genres_nin: [String]
+  tomatoes_exists: Boolean
+  type_lt: String
+  plot_gte: String
+  lastupdated_lte: String
+  rated_nin: [String]
+  type_nin: [String]
+  metacritic_gte: Int
+  countries_exists: Boolean
+  AND: [MovieQueryInput!]
+  plot_nin: [String]
+  runtime_in: [Int]
+  _id_in: [ObjectId]
+  directors: [String]
+  tomatoes: MovieTomatoQueryInput
+  plot_lte: String
+  awards: MovieAwardQueryInput
+  title_lt: String
+  num_mflix_comments_exists: Boolean
+  lastupdated_exists: Boolean
+  fullplot_ne: String
+  runtime_lte: Int
+  type_lte: String
+  plot_lt: String
+  lastupdated_gt: String
+  directors_in: [String]
+  title_gte: String
+  rated_gt: String
+  poster_nin: [String]
+  plot_exists: Boolean
+  num_mflix_comments_lte: Int
+  runtime: Int
+  plot: String
+  _id: ObjectId
+  countries: [String]
+  fullplot_exists: Boolean
+  num_mflix_comments_gt: Int
+  _id_ne: ObjectId
+  _id_gt: ObjectId
+  languages_exists: Boolean
+  year_gt: Int
+  num_mflix_comments_lt: Int
+  num_mflix_comments_ne: Int
+  fullplot_nin: [String]
+  metacritic_lt: Int
+  released_in: [DateTime]
+  title_in: [String]
+  countries_nin: [String]
+  genres_exists: Boolean
+  title_lte: String
+  plot_ne: String
+  rated_in: [String]
+  metacritic_ne: Int
+  fullplot_lt: String
+  rated_ne: String
+  released_exists: Boolean
+  metacritic_gt: Int
+  OR: [MovieQueryInput!]
+  plot_gt: String
+  year_exists: Boolean
+  metacritic: Int
+  poster_exists: Boolean
+  year_gte: Int
+  plot_in: [String]
+  type_ne: String
+  lastupdated_lt: String
+  poster_ne: String
+  num_mflix_comments: Int
+  _id_lt: ObjectId
+  lastupdated_ne: String
+  rated_exists: Boolean
+  fullplot_gt: String
+  poster_lt: String
+  poster_lte: String
+  year_lte: Int
+  year_nin: [Int]
+  imdb_exists: Boolean
+  type: String
+  runtime_gt: Int
+  writers_exists: Boolean
+  poster_in: [String]
+  fullplot_lte: String
+  released_gte: DateTime
+  lastupdated_in: [String]
+  languages_nin: [String]
+  _id_exists: Boolean
+}
+
+type MovieImdb {
+  id: Int
+  rating: Float
+  votes: Int
+}
+
+type InsertManyPayload {
+  insertedIds: [ObjectId]!
+}
+
+input MovieTomatoUpdateInput {
+  rotten: Int
+  fresh_unset: Boolean
+  rotten_unset: Boolean
+  website: String
+  production: String
+  production_unset: Boolean
+  consensus_unset: Boolean
+  critic_unset: Boolean
+  lastUpdated_unset: Boolean
+  critic: MovieTomatoCriticUpdateInput
+  viewer_unset: Boolean
+  lastUpdated: DateTime
+  rotten_inc: Int
+  website_unset: Boolean
+  boxOffice_unset: Boolean
+  boxOffice: String
+  dvd: DateTime
+  fresh_inc: Int
+  fresh: Int
+  viewer: MovieTomatoViewerUpdateInput
+  dvd_unset: Boolean
+  consensus: String
+}
+
+input MovieTomatoViewerUpdateInput {
+  numReviews_inc: Int
+  rating_inc: Float
+  rating_unset: Boolean
+  meter: Int
+  meter_inc: Int
+  rating: Float
+  meter_unset: Boolean
+  numReviews: Int
+  numReviews_unset: Boolean
+}
+
+input MovieAwardUpdateInput {
+  text_unset: Boolean
+  wins: Int
+  wins_inc: Int
+  wins_unset: Boolean
+  nominations: Int
+  nominations_inc: Int
+  nominations_unset: Boolean
+  text: String
+}
+
+input MovieTomatoCriticInsertInput {
+  numReviews: Int
+  rating: Float
+  meter: Int
+}
