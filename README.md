@@ -26,11 +26,11 @@ For demo purposes I decided to use this workaround instead of rewriting the enti
 ```cmd
 // e.g. Vivaldi
 cd "C:\Program Files\Google\Chrome\Application"
-chrome moviequery.pages.dev --disable-web-security --user-data-dir="C:\Windows\Temp"
+vivaldi moviequery.pages.dev --disable-web-security --user-data-dir=vivaldi-profile-for-disabled-web-security
 
 // e.g. Chrome
 cd C:\Users\Robin\AppData\Local\Vivaldi\Application
-vivaldi moviequery.pages.dev --disable-web-security --user-data-dir=chrome-profile-for-disabled-web-security
+chrome moviequery.pages.dev --disable-web-security --user-data-dir="C:\Windows\Temp"
 ```
 ## Other
 
