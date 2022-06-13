@@ -1,6 +1,6 @@
 <script>
   import { GraphQLClient, gql } from "graphql-request";
-  import { Modals, closeModal } from 'svelte-modals'
+  import { Modals, closeModal } from "svelte-modals";
   import MovieTile from "../components/MovieTile.svelte";
   import Nav from "../components/Nav.svelte";
   import Search from "../components/SearchFilter.svelte";
@@ -12,6 +12,11 @@
     limit: 20,
   };
 
+  let btnShowMoreVisible = false;
+  let loadedMovieCount = 0;
+  let searchResults = [];
+  let errorMessage = "";
+
   function handleSearch(event) {
     filterOptions = event.detail;
 
@@ -19,18 +24,16 @@
     loadedMovieCount = 0;
     searchResults = [];
 
-    searchMovies();
+    searchMovies().catch((error) => {
+      console.error(error);
+      errorMessage = "Fetching Data...";
+    });
   }
 
   function handleShowMore() {
     pagination.skip = loadedMovieCount;
-    searchMovies();
+    searchMovies().catch((error) => console.error(error));
   }
-
-  let btnShowMoreVisible = false;
-
-  let loadedMovieCount = 0;
-  let searchResults = [];
 
   async function searchMovies() {
     const endpoint = "https://eu-central-1.aws.realm.mongodb.com/api/client/v2.0/app/moviequerygraphql-roato/graphql";
@@ -42,8 +45,6 @@
       },
     });
 
-    // doel zoeken op titel, plot, jaar & genre
-    // leuk extra: vanaf jaar, voor jaar
     const query = gql`
       query getMovies($title: String, $plot: String, $year: Int, $genres: String, $pagination: PaginationInput) {
         results: search(input: { title: $title, plot: $plot, year: $year, genres: $genres, pagination: $pagination }) {
@@ -55,47 +56,14 @@
       }
     `;
 
-    // works
-    //  const query = gql`
-    //    query {
-    //       results: search(input: {title: "the", year: 2002}) {
-    //       title,
-    //       year
-    //     }
-    //    }
-    //  `;
-
-    //  const query = gql`
-    //    query getMovies( $year: Int, $yearGt: Int) {
-    //      movies(query: { year: $year, year_gt: $yearGt }) {
-    //        title
-    //        year
-    //      }
-    //     titleContains(input:"the") {
-    //       title
-    //     }
-    //    }
-    //  `;
-    // const query = gql`
-    //   query getMovies($title: String, $year: Int, $yearGt: Int) {
-    //     titleContains: "test" {
-    //       title
-    //       year
-    //     }
-    //   }
-    // `;
-
-    console.log(pagination);
-
     filterOptions.pagination = pagination;
-    console.log(filterOptions.pagination);
 
     let data = await graphQLClient.request(query, filterOptions);
 
     if (data.results == null || data.results.length === 0) {
+      errorMessage = "No movies found.";
       console.log("No movies found.");
     }
-      console.log(data.results);
 
     let foundMovies = data.results.length;
     if (foundMovies > 0) {
@@ -103,7 +71,7 @@
 
       data.results.forEach((movie) => {
         if (movie.poster === null) {
-          movie.poster = "cover404.svg";
+          movie.poster = "";
         }
 
         searchResults.push(movie);
@@ -118,15 +86,7 @@
     } else {
       btnShowMoreVisible = foundMovies > 0;
     }
-
-    /// console.log(searchResults);
-    console.log(loadedMovieCount);
-    console.log(btnShowMoreVisible);
-
-    //console.log(JSON.stringify(data, undefined, 2))
   }
-
-  //main().catch((error) => console.error(error))
 </script>
 
 <Nav />
@@ -135,24 +95,12 @@
   <Search on:search={handleSearch} />
 </section>
 
-<!-- <section class="grid grid-cols-4 gap-4 p-6"> -->
 <section class="flex flex-wrap gap-4 place-content-center mt-4 sm:mt-8 lg:mt-12">
-  {#each searchResults as movie}
+  {#each searchResults as movie (movie._id)}
     <MovieTile {...movie} />
   {:else}
-    <h3>Fetching Data...</h3>
+    <h3>{errorMessage}</h3>
   {/each}
-  <!-- {#each Array(9) as _, i}
-    <a href="">
-      <div class="rounded-sm">
-        <img src="https://m.media-amazon.com/images/M/MV5BMjE1MDU1MDA2Nl5BMl5BanBnXkFtZTcwNTQ2Mzk2NQ@@._V1_SY1000_SX677_AL_.jpg" alt="" class="object-cover object-center w-full rounded-md h-72 dark:bg-gray-500" />
-        <div class="m-2">
-          <h2 class="font-semibold">!Women Art Revolution 1</h2>
-          <span class="block text-xs font-medium tracking-widest italic dark:text-violet-400">2010</span>
-        </div>
-      </div>
-    </a>
-  {/each} -->
 </section>
 
 <section class="grid place-content-center my-5">
@@ -163,13 +111,8 @@
   {/if}
 </section>
 
-
 <Modals>
-  <div
-    slot="backdrop"
-    class="backdrop"
-    on:click={closeModal}
-  />
+  <div slot="backdrop" class="backdrop" on:click={closeModal} />
 </Modals>
 
 <style>
@@ -179,6 +122,6 @@
     bottom: 0;
     right: 0;
     left: 0;
-    background: rgba(0,0,0,0.50);
+    background: rgba(0, 0, 0, 0.5);
   }
 </style>
